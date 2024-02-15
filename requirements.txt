@@ -1,6 +1,5 @@
 fastapi[all]
 beautifulsoup4==4.11.1
-fastapi==0.86.0
 requests==2.31.0
 requests-futures==1.0.0
 requests-ntlm==1.2.0
