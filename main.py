@@ -4,6 +4,7 @@ from typing import Optional
 
 
 from typing import Union
+from fastapi import FastAPI
 
 import requests
 from bs4 import BeautifulSoup
