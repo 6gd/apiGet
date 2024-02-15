@@ -51,4 +51,4 @@ def get_data():
             listMatch.append(dataRetrun)
         return listMatch
     except Exception as e:
-        return e
+        return {"message":e}
