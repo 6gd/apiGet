@@ -33,7 +33,7 @@ app.add_middleware(
 
 
 @app.get("/dataMatch")
-def get_data():
+async def get_data():
     try:
         listMatch = []
         request = requests.get("https://2kooralive.live-kooora.com/")
