@@ -62,11 +62,12 @@ def Getdata():
                     iframe = soupIframe.find("iframe",{"class":"video-iframe"}).get("src")
                 else:
                     iframe = None
+                
                 dataRetrun = {
                     "id":index,
                     "linkVideo":iframe,
-                    "PlayerOneImage":playerOne_img,
-                    "PlayerTwoImage":playerTwo_img,
+                    "PlayerOneImage":shrinkImg(playerOne_img),
+                    "PlayerTwoImage":shrinkImg(playerTwo_img),
                     "PlayerOneName":playerOne_Name,
                     "PlayerTwoName":playerTwo_Name,
                     "Result":reslut,
@@ -128,3 +129,14 @@ async def get_data():
     #     return listMatch
     # except Exception as e:
     #     return {"message":e}
+
+
+def shrinkImg(urlimg):
+    url ="https://api.tinify.com/shrink"
+    headers = {
+        "Host": "api.tinify.com",
+        "Authorization": "Basic c1hUekdtWVg1V3dsekhtVmNIOVQ5MHJmTTkwUVpEdG4=",
+        "Content-Type": "application/json"
+    }
+    data = '{"source": {"url": "'+f"{urlimg}"+'"}}'
+    return requests.post(url,data=data,headers=headers).json()["output"]["url"]
