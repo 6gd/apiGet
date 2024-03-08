@@ -1,3 +1,4 @@
+from time import sleep
 from typing import Optional
 
 
@@ -79,6 +80,7 @@ def Getdata():
             return listMatch
         except Exception as e:
             pass
+        sleep(1)
 
 
 threading.Thread(target=Getdata, daemon=True).start()
