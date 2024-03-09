@@ -81,7 +81,7 @@ def Getdata():
             return listMatch
         except Exception as e:
             pass
-        sleep(10)
+        sleep(30)
 
 
 threading.Thread(target=Getdata, daemon=True).start()
