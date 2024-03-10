@@ -43,6 +43,7 @@ def Getdata():
         try:
             listMatch = []
             request = requests.get("https://2kooralive.live-kooora.com/")
+            print(request.status_code)
             soup = BeautifulSoup(request.text, 'html.parser')
             for index,match in enumerate(soup.find_all("div",{"class":"match-container"})):
                 linkVideo = match.find("a").get("href")
@@ -74,11 +75,11 @@ def Getdata():
                     "StatusMatch":dateEnd,
                     "channel":matchinfo
                 }
-                
                 listMatch.append(dataRetrun)
-            LastList.clear
+            LastList.clear()
             LastList.append(listMatch)
         except Exception as e:
+            print(e,"gg")
             pass
         sleep(30)
 
@@ -89,19 +90,25 @@ def Getdata():
 @app.get("/dataMatch")
 async def get_data():
     return LastList[0]
+threading.Thread(target=Getdata, daemon=True).start()
+# @app.get("/")
+# async def run():
+#     threading.Thread(target=Getdata, daemon=True).start()
+#     return {"data":"Running"}
 
-@app.get("/")
-async def run():
-    threading.Thread(target=Getdata, daemon=True).start()
-    return {"data":"Running"}
-
-
+import re
 def shrinkImg(urlimg):
-    url ="https://api.tinify.com/shrink"
-    headers = {
-        "Host": "api.tinify.com",
-        "Authorization": "Basic c1hUekdtWVg1V3dsekhtVmNIOVQ5MHJmTTkwUVpEdG4=",
-        "Content-Type": "application/json"
-    }
-    data = '{"source": {"url": "'+f"{urlimg}"+'"}}'
-    return requests.post(url,data=data,headers=headers).json()["output"]["url"]
+    url = urlimg
+    regex = re.compile(r'(https?://.*\.(?:png|jpg))', re.IGNORECASE)
+
+    match = regex.match(url)
+    if match:
+
+        url ="https://api.tinify.com/shrink"
+        headers = {
+            "Host": "api.tinify.com",
+            "Authorization": "Basic c1hUekdtWVg1V3dsekhtVmNIOVQ5MHJmTTkwUVpEdG4=",
+            "Content-Type": "application/json"
+        }
+        data = '{"source": {"url": "'+f"{match.group()}"+'"}}'
+        return requests.post(url,data=data,headers=headers).json()["output"]["url"]
