@@ -78,7 +78,6 @@ def Getdata():
                 listMatch.append(dataRetrun)
             LastList.clear
             LastList.append(listMatch)
-            return listMatch
         except Exception as e:
             pass
         sleep(30)
@@ -90,7 +89,7 @@ threading.Thread(target=Getdata, daemon=True).start()
 
 @app.get("/dataMatch")
 async def get_data():
-    return LastList[-1]
+    return LastList[0]
 
     # try:
     #     listMatch = []
