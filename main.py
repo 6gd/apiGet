@@ -90,7 +90,7 @@ def Getdata():
 async def get_data():
     return LastList[0]
 
-@app.get("")
+@app.get("/")
 async def run():
     threading.Thread(target=Getdata, daemon=True).start()
     return {"data":"Running"}
