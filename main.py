@@ -83,13 +83,17 @@ def Getdata():
         sleep(30)
 
 
-threading.Thread(target=Getdata, daemon=True).start()
 
 
 
 @app.get("/dataMatch")
 async def get_data():
     return LastList[0]
+
+@app.get("")
+async def run():
+    threading.Thread(target=Getdata, daemon=True).start()
+    return {"data":"Running"}
 
 
 def shrinkImg(urlimg):
